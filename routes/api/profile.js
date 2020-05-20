@@ -64,7 +64,7 @@ router.post('/', [auth, [
   if (githubusername) profileFields.githubusername = githubusername;
 
   if (skills) {
-    const skillsArray = skills.split(',').skillsArray.map(skill => skill.trim());
+    const skillsArray = skills.split(',').map(skill => skill.trim());
     profileFields.skills = skillsArray;
   }
 
@@ -98,7 +98,6 @@ router.post('/', [auth, [
     console.error(err.message);
     res.status(500).send('Server Error');
   }
-
 })
 
 module.exports = router;
