@@ -49,7 +49,7 @@ const profileSchema = new Schema({
       },
       to: {
         type: Date,
-        required: true
+        // required: true
       },
       current: {
         type: Boolean,
