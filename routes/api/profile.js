@@ -207,58 +207,6 @@ router.delete('/experience/:experience_id', auth, async (req, res) => {
   }
 })
 
-//@route      UPDATE api/profile/experience/:experience_id
-//@desc       Update profile experience
-//@access     private
-router.put('/experience/:experience_id', auth, async (req, res) => {
-  const { title, company, location, from, to, current, description } = req.body;
+TODO: "Add api/profile/experience/:experience_id route to update experience"
 
-  try {
-    const profile = await Profile.findOne({ 'user': req.user.id});
-    const profile2 = await Profile.findOne({ 'user': req.user.id, 'experience': {_id: ObjectId(req.params.experience_id)}});
-
-    // const r = await Profile.updateOne({ 'user': req.user.id, 'experience.id': req.params.experience_id },
-      // { $set: { 'experience.$.title': 'test2' } });
-
-    const f = await Profile.findOneAndUpdate(
-      { 'user': req.user.id, experience: {$elemMatch: {id: req.params.experience_id}} }, { bio: 'test'}, {returnOriginal: false} )
-
-    // console.log(r.n);
-    // console.log(r.nModified);
-
-    // await profile.save();
-
-    // res.json(profile);
-    res.json(f);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
-  }
-})
 module.exports = router;
-
-/*
-    const updateIndex = profile.experience
-      .map(item => item.id)
-      .indexOf(req.params.experience_id);
-
-    if(title)  profile.experience[updateIndex].title = title;
-    if(company)  profile.experience[updateIndex].company = company;
-    if(location)  profile.experience[updateIndex].location = location;
-    if(from)  profile.experience[updateIndex].from = from;
-    if(to)  profile.experience[updateIndex].to = to;
-    if(description)  profile.experience[updateIndex].description = description;
-
-
-
-
-    const updated = {};
-    if (title) updated[title] = title;
-    if (company) updated[company] = company;
-    if (location) updated[location] = location;
-    if (from) updated[from] = from;
-    if (to) updated[to] = to;
-    if (description) updated[description] = description;
-
-
-*/
