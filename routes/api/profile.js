@@ -5,6 +5,8 @@ const { check, validationResult } = require('express-validator');
 var ObjectId = require('mongodb').ObjectID;
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
+const config = require('config');
+const axios = require('axios');
 
 //@route      GET api/profile/me
 //@desc       Get current users profile
@@ -253,6 +255,36 @@ router.delete('/education/:education_id', auth, async (req, res) => {
     await profile.save();
 
     res.json('Education deleted');
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('Server Error');
+  }
+})
+
+//@route      GET api/profile/github/:username
+//@desc       Get user repositories from github
+//@access     public
+
+router.get('/github/:username', async (req, res) => {
+  try {
+    const options = {
+      url: `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc&client_id=${config.get('githubClientId')}&client_secret=${config.get('githubSecret')}`,
+      method: 'GET',
+      headers: { 'user-agent': 'node.js' }
+    }
+
+    const response = await axios(options);
+
+    // console.log(response);
+    console.log(response.data);
+    // console.log(response.status);
+
+    if (response.status !== 200) {
+      return res.status(400).json({ msg: 'No Github profile found' });
+    }
+
+    res.json(response.data);
 
   } catch (error) {
     console.error(error);
