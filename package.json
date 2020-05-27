@@ -32,7 +32,6 @@
   },
   "devDependencies": {
     "concurrently": "^5.2.0",
-    "jest": "^26.0.1",
     "nodemon": "^2.0.3"
   }
 }
