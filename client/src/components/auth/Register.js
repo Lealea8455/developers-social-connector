@@ -1,8 +1,12 @@
 import React from 'react'
 import { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
+import PropTypes from 'prop-types';
 
-const Register = () => {
+const Register = ({ setAlert, register }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -17,10 +21,11 @@ const Register = () => {
   const onSubmit = async e => {
     e.preventDefault();
 
-    if (password !== password2)
-      console.log('Passwords don\'t match!');
+    if (password !== password2) {
+      setAlert('Passwords don\'t match!', 'danger');
+    }
     else {
-      console.log('SUCCESS');
+      register({ name, email, password });
     }
   }
 
@@ -36,7 +41,7 @@ const Register = () => {
             placeholder="Name"
             onChange={e => onChange(e)}
             value={name}
-            required
+            // required
           />
         </div>
         <div className="form-group">
@@ -46,7 +51,7 @@ const Register = () => {
             placeholder="Email Address"
             onChange={e => onChange(e)}
             value={email}
-            required
+            // required
           />
         </div>
         <small className="form-text">This site uses Gravatar so if you want a profile image, use a Gravatar email</small>
@@ -57,7 +62,7 @@ const Register = () => {
             placeholder="Password"
             onChange={e => onChange(e)}
             value={password}
-            minLength="6"
+            // minLength="6"
           />
         </div>
         <div className="form-group">
@@ -67,7 +72,7 @@ const Register = () => {
             placeholder="Confirm Password"
             onChange={e => onChange(e)}
             value={password2}
-            minLength="6"
+            // minLength="6"
           />
         </div>
         <input type="submit" className="btn btn-primary" value="Register" />
@@ -79,32 +84,11 @@ const Register = () => {
   )
 }
 
-export default Register
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired
+}
 
-
-/*
-{
-      const newUser = {
-        name,
-        email,
-        password
-      }
-
-      try {
-        const config = {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-
-        const body = JSON.stringify(newUser);
-
-        const res = await axios.post('/api/users', body, config);
-        console.log(res.data);
-
-      } catch (err) {
-        console.log(err.response.data)
-      }
-    }
-
-*/
+export default connect(null,
+  { setAlert, register }
+)(Register);
