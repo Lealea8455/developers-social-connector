@@ -6,8 +6,8 @@ import {
   AUTH_ERROR,
   USER_LOADED,
   LOGIN_SUCCESS,
-  LOGIN_FAIL
-
+  LOGIN_FAIL,
+  LOGOUT
 } from '../actions/types';
 import setAuthToken from '../utils/setAuthToken';
 
@@ -76,7 +76,7 @@ export const register = ({ name, email, password }) => async dispatch => {
   try {
     const res = await axios.post('/api/users', body, config);
 
-    dispatch({ 
+    dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data
     });
@@ -94,3 +94,9 @@ export const register = ({ name, email, password }) => async dispatch => {
     });
   }
 }
+
+// Logout / Clear Profile
+export const logout = () => dispatch => {
+  dispatch({ type: LOGOUT });
+}
+
