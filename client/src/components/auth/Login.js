@@ -4,8 +4,9 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/auth';
+import Spinner from '../layout/Spinner';
 
-const Login = ({ login, isAuthenticated }) => {
+const Login = ({ login, isAuthenticated, loading }) => { 
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -21,7 +22,10 @@ const Login = ({ login, isAuthenticated }) => {
   }
 
   // Redirect if logged in
-  if (isAuthenticated) {
+  if(loading) {
+    return  <Spinner /> 
+  }
+  if (isAuthenticated && !loading) {
     return <Redirect to='/dashboard' />
   }
 
@@ -61,11 +65,13 @@ const Login = ({ login, isAuthenticated }) => {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
+  loading: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  loading: state.auth.loading
 })
 
 export default connect(
