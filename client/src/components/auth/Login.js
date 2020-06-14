@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/auth';
+import Spinner from '../layout/Spinner';
 
 const Login = ({ login, isAuthenticated, loading }) => { 
   const [formData, setFormData] = useState({
@@ -22,7 +23,7 @@ const Login = ({ login, isAuthenticated, loading }) => {
 
   // Redirect if logged in
   if(loading) {
-    return <div>loading</div>
+    return  <Spinner /> 
   }
   if (isAuthenticated && !loading) {
     return <Redirect to='/dashboard' />

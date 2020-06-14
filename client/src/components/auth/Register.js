@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
+import Spinner from '../layout/Spinner';
 
 const Register = ({ setAlert, register, isAuthenticated, loading }) => {
   const [formData, setFormData] = useState({
@@ -30,7 +31,7 @@ const Register = ({ setAlert, register, isAuthenticated, loading }) => {
   }
 
   if(loading) {
-    return <div>loading</div>
+    return  <Spinner /> 
   }
   if (isAuthenticated) {
     return <Redirect to='/dashboard' />
