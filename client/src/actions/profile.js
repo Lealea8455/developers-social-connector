@@ -3,7 +3,8 @@ import axios from 'axios';
 
 import {
   GET_PROFILE,
-  PROFILE_ERROR
+  PROFILE_ERROR,
+  UPDATE_PROFILE
 } from './types';
 import { setAlert } from './alert';
 
@@ -45,6 +46,77 @@ export const createProfile = (formDate, history, edit = false) => async dispatch
     if (!edit) {
       history.push('/dashboard');
     }
+
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+}
+
+// Add experience 
+export const addExperience = (formDate, history) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-type': 'application/json'
+      }
+    }
+
+    const res = await axios.put('/api/profile/experience', formDate, config);
+
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: res.data
+    });
+
+    dispatch(setAlert('Experience added', 'success'));
+
+    history.push('/dashboard');
+
+
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+}
+
+
+// Add Education 
+export const addEducation = (formDate, history) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-type': 'application/json'
+      }
+    }
+
+    const res = await axios.put('/api/profile/education', formDate, config);
+
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: res.data
+    });
+
+    dispatch(setAlert('Education added', 'success'));
+
+    history.push('/dashboard');
+
 
   } catch (err) {
     const errors = err.response.data.errors;
