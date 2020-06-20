@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../../middleware/auth');
+const axios = require('axios');
+const config = require('config');
 const { check, validationResult } = require('express-validator');
 var ObjectId = require('mongodb').ObjectID;
+const auth = require('../../middleware/auth');
+
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
-const config = require('config');
-const axios = require('axios');
+const Post = require('../../models/Post');
 
 //@route      GET api/profile/me
 //@desc       Get current users profile
@@ -143,7 +145,7 @@ router.get('/user/:user_id', async (req, res) => {
 //@access     private
 router.delete('/', auth, async (req, res) => {
   try {
-    // @todo - remove users posts
+    await Post.deleteMany({ user: req.user.id });
 
     // Remove profile
     await Profile.findOneAndDelete({ user: req.user.id });
@@ -264,7 +266,6 @@ router.delete('/education/:education_id', auth, async (req, res) => {
 //@route      GET api/profile/github/:username
 //@desc       Get user repositories from github
 //@access     public
-
 router.get('/github/:username', async (req, res) => {
   try {
     const options = {
@@ -275,9 +276,7 @@ router.get('/github/:username', async (req, res) => {
 
     const response = await axios(options);
 
-    // console.log(response);
     console.log(response.data);
-    // console.log(response.status);
 
     if (response.status !== 200) {
       return res.status(400).json({ msg: 'No Github profile found' });
