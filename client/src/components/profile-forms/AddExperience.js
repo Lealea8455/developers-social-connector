@@ -3,9 +3,10 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addExperience } from '../../actions/profile';
+import { setAlert } from '../../actions/alert';
 
 
-const AddExperience = ({ addExperience, history }) => {
+const AddExperience = ({ addExperience, setAlert, history }) => {
   const [formData, setFormData] = useState({
     company: '',
     title: '',
@@ -22,6 +23,15 @@ const AddExperience = ({ addExperience, history }) => {
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  const onSubmit = e => {
+    e.preventDefault();
+    if (!current && to.length === 0) {
+      setAlert('\'To\' date is required', 'danger');
+    }
+    else {
+      addExperience(formData, history);
+    }
+  }
 
   return (
     <Fragment>
@@ -33,10 +43,7 @@ const AddExperience = ({ addExperience, history }) => {
         positions that you have had in the past
       </p>
       <small>* = required field</small>
-      <form className="form" onSubmit={e => {
-        e.preventDefault();
-        addExperience(formData, history);
-      }}>
+      <form className="form" onSubmit={e => onSubmit(e)} >
         <div className="form-group">
           <input type="text" placeholder="* Job Title" name="title" value={title} onChange={e => onChange(e)} required />
         </div>
@@ -74,7 +81,7 @@ const AddExperience = ({ addExperience, history }) => {
           ></textarea>
         </div>
         <input type="submit" className="btn btn-primary my-1" />
-        <a className="btn btn-light my-1" href="dashboard.html">Go Back</a>
+        <Link className="btn btn-light my-1" to="/dashboard">Go Back</Link>
       </form>
     </Fragment>
   )
@@ -82,6 +89,7 @@ const AddExperience = ({ addExperience, history }) => {
 
 AddExperience.propTypes = {
   addExperience: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
 }
 
-export default connect(null, { addExperience })(AddExperience);
+export default connect(null, { addExperience, setAlert })(AddExperience);

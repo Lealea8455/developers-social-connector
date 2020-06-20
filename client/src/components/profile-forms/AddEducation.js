@@ -3,9 +3,9 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addEducation } from '../../actions/profile';
+import { setAlert } from '../../actions/alert';
 
-
-const AddEducation = ({ addEducation, history }) => {
+const AddEducation = ({ addEducation, setAlert, history }) => {
   const [formData, setFormData] = useState({
     school: '',
     degree: '',
@@ -22,6 +22,15 @@ const AddEducation = ({ addEducation, history }) => {
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  const onSubmit = e => {
+    e.preventDefault();
+    if (!current && to.length === 0) {
+      setAlert('\'To\' date is required', 'danger');
+    }
+    else {
+      addEducation(formData, history);
+    }
+  }
 
   return (
     <Fragment>
@@ -32,10 +41,7 @@ const AddEducation = ({ addEducation, history }) => {
         <i className="fas fa-code-branch"></i> Add any school you have attended
       </p>
       <small>* = required field</small>
-      <form className="form" onSubmit={e => {
-        e.preventDefault();
-        addEducation(formData, history);
-      }}>
+      <form className="form" onSubmit={e => onSubmit(e)}>
         <div className="form-group">
           <input type="text" placeholder="* School" name="school" value={school} onChange={e => onChange(e)} required />
         </div>
@@ -55,7 +61,7 @@ const AddEducation = ({ addEducation, history }) => {
               setFormData({ ...formData, current: !current });
               toggleDisabled(!toDateDisabled);
             }} />
-            {' '} Current Studying</p>
+            {' '} Current School</p>
         </div>
         <div className="form-group">
           <h4>To Date</h4>
@@ -73,7 +79,7 @@ const AddEducation = ({ addEducation, history }) => {
           ></textarea>
         </div>
         <input type="submit" className="btn btn-primary my-1" />
-        <a className="btn btn-light my-1" href="dashboard.html">Go Back</a>
+        <Link className="btn btn-light my-1" to="/dashboard">Go Back</Link>
       </form>
     </Fragment>
   )
@@ -81,6 +87,7 @@ const AddEducation = ({ addEducation, history }) => {
 
 AddEducation.propTypes = {
   addEducation: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
 }
 
-export default connect(null, { addEducation })(AddEducation);
+export default connect(null, { addEducation, setAlert })(AddEducation);
