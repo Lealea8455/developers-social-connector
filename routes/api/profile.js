@@ -276,8 +276,6 @@ router.get('/github/:username', async (req, res) => {
 
     const response = await axios(options);
 
-    console.log(response.data);
-
     if (response.status !== 200) {
       return res.status(400).json({ msg: 'No Github profile found' });
     }
