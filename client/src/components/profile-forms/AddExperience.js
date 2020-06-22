@@ -92,4 +92,7 @@ AddExperience.propTypes = {
   setAlert: PropTypes.func.isRequired,
 }
 
-export default connect(null, { addExperience, setAlert })(AddExperience);
+export default connect(
+  null,
+  { addExperience, setAlert }
+)(withRouter(AddExperience));

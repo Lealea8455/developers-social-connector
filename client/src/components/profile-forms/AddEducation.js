@@ -90,4 +90,7 @@ AddEducation.propTypes = {
   setAlert: PropTypes.func.isRequired,
 }
 
-export default connect(null, { addEducation, setAlert })(AddEducation);
+export default connect(
+  null,
+  { addEducation, setAlert }
+)(withRouter(AddEducation));
