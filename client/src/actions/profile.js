@@ -7,7 +7,7 @@ import {
   PROFILE_ERROR,
   UPDATE_PROFILE,
   ACCOUNT_DELETED,
-  CLEAR_PROFILE, 
+  CLEAR_PROFILE,
   GET_REPOS
 } from './types';
 import { setAlert } from './alert';
