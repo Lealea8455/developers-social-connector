@@ -1,5 +1,5 @@
 {
-  "name": "dataconnector",
+  "name": "developers-social-connector",
   "version": "1.0.0",
   "description": "Social network",
   "main": "server.js",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Lealea8455/mern-stack.git"
+    "url": "git+https://github.com/Lealea8455/developers-social-connector.git"
   },
   "author": "Lea",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Lealea8455/mern-stack/issues"
+    "url": "https://github.com/Lealea8455/developers-social-connector/issues"
   },
-  "homepage": "https://github.com/Lealea8455/mern-stack#readme",
+  "homepage": "https://github.com/Lealea8455/developers-social-connector#readme",
   "dependencies": {
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
