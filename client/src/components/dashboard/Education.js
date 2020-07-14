@@ -30,9 +30,10 @@ const Education = ({ education, deleteEducation }) => {
       <table className="table">
         <thead>
           <tr>
-            <th>Company</th>
-            <th className="hide-sm">Title</th>
-            <th className="hide-sm">Years</th>
+            <th>School</th>
+            <th className="hide-sm">Degree</th>
+            <th className="hide-sm">Field Of Study</th>
+            <th className="hide-sm">years</th>
             <th />
           </tr>
         </thead>
